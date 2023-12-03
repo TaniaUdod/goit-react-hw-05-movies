@@ -1,5 +1,5 @@
 import { getTrending } from 'api/TMDBApi';
-import MovieList from 'components/MovieList';
+import MoviesList from 'components/MovieList/MoviesList';
 import React, { useEffect, useState } from 'react';
 
 const Home = () => {
@@ -26,14 +26,14 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <main>
       <h1>Trending today</h1>
       {isLoading && <p>loading...</p>}
-      <MovieList movies={movies} />
+      <MoviesList movies={movies} />
       {error && (
         <p style={{ textAlign: 'center', margin: 'auto' }}>Sorry. {error} 😭</p>
       )}
-    </div>
+    </main>
   );
 };
 
