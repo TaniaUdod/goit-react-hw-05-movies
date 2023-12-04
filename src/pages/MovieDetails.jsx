@@ -1,12 +1,13 @@
 import { getMovieDetails } from 'api/TMDBApi';
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,6 +29,9 @@ const MovieDetails = () => {
   return (
     <div>
       {isLoading && <p>loading...</p>}
+      <Link to={location.state?.from || '/'}>
+        <button type="button">Go back</button>
+      </Link>
       {movie && (
         <div>
           <img
@@ -36,7 +40,7 @@ const MovieDetails = () => {
                 ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
                 : defaultImg
             }
-            width={250}
+            width={400}
             alt={movie.original_title}
           />
           <div>
