@@ -1,61 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { getSearchMovies } from 'api/TMDBApi';
 import MoviesList from 'components/MovieList/MoviesList';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import SearchForm from 'components/SearchForm/SearchForm';
 import { Notify } from 'notiflix';
 
 const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(null);
   const [error, setError] = useState('');
-  const { movieId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const query = searchParams.get('query') || '';
+
   useEffect(() => {
-    const getSearchMoviesByQuery = query => {
-      setIsLoading(true);
+    if (!query) return;
 
-      getSearchMovies(query)
-        .then(searchMovies => {
-          setMovies(searchMovies);
+    setIsLoading(true);
 
-          if (searchMovies.length === 0) {
-            Notify.failure(
-              `Sorry, there are no movies matching your search query. Please try again.`
-            );
-            setIsLoading(false);
-            return;
-          }
-
-          if (searchMovies.length > 0) {
-            Notify.success(`Hooray! We found ${searchMovies.length} movies.`);
-          }
-        })
-        .catch(error => {
-          setError(error.message);
-        })
-        .finally(() => {
+    getSearchMovies(query)
+      .then(searchMovies => {
+        if (searchMovies.length === 0) {
+          Notify.failure(
+            `Sorry, there are no movies matching your search query. Please, try again.`
+          );
           setIsLoading(false);
-        });
-    };
-    const query = searchParams.get('query') || '';
-    getSearchMoviesByQuery(query);
-  }, [movieId, searchParams]);
+          return;
+        }
 
-  const handleSearchSubmit = query => {
-    setSearchParams({ query });
+        setMovies(searchMovies);
+      })
+      .catch(error => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [query]);
+
+  const handleSubmit = value => {
+    setSearchParams({ query: value });
   };
 
   return (
-    <main>
-      <SearchForm onSubmit={handleSearchSubmit} />
+    <div>
+      <SearchForm onSubmit={handleSubmit} />
       {isLoading && <p>loading...</p>}
       {movies && <MoviesList movies={movies} />}
       {error && (
         <p style={{ textAlign: 'center', margin: 'auto' }}>Sorry. {error} 😭</p>
       )}
-    </main>
+    </div>
   );
 };
 

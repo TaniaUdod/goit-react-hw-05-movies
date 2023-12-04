@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix';
 import React, { useState } from 'react';
 
 const SearchForm = ({ onSubmit }) => {
@@ -10,6 +11,12 @@ const SearchForm = ({ onSubmit }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
+
+    if (query === '') {
+      Notify.warning(`Enter your request! Please, try again.`);
+      return;
+    }
+
     onSubmit(query);
     setQuery('');
   };
@@ -21,10 +28,7 @@ const SearchForm = ({ onSubmit }) => {
         name="query"
         value={query}
         onChange={handleInputChange}
-        autoComplete="off"
-        // autoFocus
-        // placeholder="Search images and photos"
-        required
+        placeholder="Search movies"
       />
       <button type="submit">Search</button>
     </form>
