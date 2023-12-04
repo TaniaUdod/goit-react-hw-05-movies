@@ -1,4 +1,5 @@
 import { getMovieReviews } from 'api/TMDBApi';
+import Loader from 'components/Loader/Loader';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -36,7 +37,8 @@ const Reviews = () => {
 
   return (
     <div>
-      {isLoading && <p>loading...</p>}
+      {isLoading && <Loader />}
+
       {reviews.length !== 0 ? (
         <ul>
           {reviews.map(

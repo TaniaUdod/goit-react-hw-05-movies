@@ -4,6 +4,7 @@ import MoviesList from 'components/MovieList/MoviesList';
 import { useSearchParams } from 'react-router-dom';
 import SearchForm from 'components/SearchForm/SearchForm';
 import { Notify } from 'notiflix';
+import Loader from 'components/Loader/Loader';
 
 const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +46,7 @@ const Movies = () => {
   return (
     <div>
       <SearchForm onSubmit={handleSubmit} />
-      {isLoading && <p>loading...</p>}
+      {isLoading && <Loader />}
       {movies && <MoviesList movies={movies} />}
       {error && (
         <p style={{ textAlign: 'center', margin: 'auto' }}>Sorry. {error} 😭</p>

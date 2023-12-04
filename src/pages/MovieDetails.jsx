@@ -1,4 +1,5 @@
 import { getMovieDetails } from 'api/TMDBApi';
+import Loader from 'components/Loader/Loader';
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
@@ -28,10 +29,12 @@ const MovieDetails = () => {
 
   return (
     <div>
-      {isLoading && <p>loading...</p>}
       <Link to={location.state?.from || '/'}>
-        <button type="button">Go back</button>
+        <button type="button">⬅ Go back</button>
       </Link>
+
+      {isLoading && <Loader />}
+
       {movie && (
         <div>
           <img
@@ -59,9 +62,11 @@ const MovieDetails = () => {
           </div>
         </div>
       )}
+
       {error && (
         <p style={{ textAlign: 'center', margin: 'auto' }}>Sorry. {error} 😭</p>
       )}
+
       <hr />
       <h2>Additional information</h2>
       <ul>

@@ -30,7 +30,7 @@ const SearchForm = ({ onSubmit }) => {
         onChange={handleInputChange}
         placeholder="Search movies"
       />
-      <button type="submit">Search</button>
+      <button type="submit">Search 🔍</button>
     </form>
   );
 };

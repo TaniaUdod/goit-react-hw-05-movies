@@ -1,4 +1,5 @@
 import { getMovieCredits } from 'api/TMDBApi';
+import Loader from 'components/Loader/Loader';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -27,7 +28,7 @@ const Cast = () => {
 
   return (
     <div>
-      {isLoading && <p>loading...</p>}
+      {isLoading && <Loader />}
 
       <ul>
         {cast.map(({ id, profile_path, name, character }) => (
