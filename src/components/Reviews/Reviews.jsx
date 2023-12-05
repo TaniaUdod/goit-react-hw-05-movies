@@ -2,6 +2,7 @@ import { getMovieReviews } from 'api/TMDBApi';
 import Loader from 'components/Loader/Loader';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Data, Img, List } from './Reviews.styled';
 
 const Reviews = () => {
   const { movieId } = useParams();
@@ -40,7 +41,7 @@ const Reviews = () => {
       {isLoading && <Loader />}
 
       {reviews.length !== 0 ? (
-        <ul>
+        <List>
           {reviews.map(
             ({
               id,
@@ -50,7 +51,7 @@ const Reviews = () => {
               created_at,
             }) => (
               <li key={id}>
-                <img
+                <Img
                   src={
                     avatar_path
                       ? `https://image.tmdb.org/t/p/w500/${avatar_path}`
@@ -60,12 +61,12 @@ const Reviews = () => {
                   width="50px"
                 />
                 <h3>{author}</h3>
-                <p>{formatCreatedAt(created_at)}</p>
+                <Data>{formatCreatedAt(created_at)}</Data>
                 <p>{content}</p>
               </li>
             )
           )}
-        </ul>
+        </List>
       ) : (
         <h3>No reviews</h3>
       )}

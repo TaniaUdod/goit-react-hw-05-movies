@@ -1,5 +1,6 @@
 import { Notify } from 'notiflix';
 import React, { useState } from 'react';
+import { Button, Form, Input, Wrapper } from './SearchForm.styled';
 
 const SearchForm = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
@@ -22,16 +23,18 @@ const SearchForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="query"
-        value={query}
-        onChange={handleInputChange}
-        placeholder="Search movies"
-      />
-      <button type="submit">Search 🔍</button>
-    </form>
+    <Wrapper>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          name="query"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Search movies"
+        />
+        <Button type="submit">Search 🔍</Button>
+      </Form>
+    </Wrapper>
   );
 };
 

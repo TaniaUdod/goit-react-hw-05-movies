@@ -1,17 +1,18 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Img, Item, Link, List, Text } from './MovieList.styled';
 
 const MovieList = ({ movies }) => {
   const location = useLocation();
   const defaultImg = `https://orangeheatingsupplies.co.uk/wp-content/uploads/2023/02/image-coming-soon-placeholder.png`;
 
   return (
-    <ul>
+    <List>
       {movies.map(
         ({ id, original_title, title, poster_path, release_date }) => (
-          <li key={id}>
+          <Item key={id}>
             <Link to={`/movies/${id}`} state={{ from: location }}>
-              <img
+              <Img
                 src={
                   poster_path
                     ? `https://image.tmdb.org/t/p/w500/${poster_path}`
@@ -20,14 +21,14 @@ const MovieList = ({ movies }) => {
                 width={400}
                 alt={original_title}
               />
-              <p>
+              <Text>
                 {title} ({release_date.slice(0, 4)})
-              </p>
+              </Text>
             </Link>
-          </li>
+          </Item>
         )
       )}
-    </ul>
+    </List>
   );
 };
 

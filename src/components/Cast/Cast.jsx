@@ -2,6 +2,7 @@ import { getMovieCredits } from 'api/TMDBApi';
 import Loader from 'components/Loader/Loader';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Img, Item, List, Text, Title } from './Cast.styled';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -30,10 +31,10 @@ const Cast = () => {
     <div>
       {isLoading && <Loader />}
 
-      <ul>
+      <List>
         {cast.map(({ id, profile_path, name, character }) => (
-          <li key={id}>
-            <img
+          <Item key={id}>
+            <Img
               src={
                 profile_path
                   ? `https://image.tmdb.org/t/p/w500/${profile_path}`
@@ -42,11 +43,11 @@ const Cast = () => {
               alt={name}
               width="200px"
             />
-            <h3>{name}</h3>
-            <p>{character}</p>
-          </li>
+            <Title>{name}</Title>
+            <Text>{character}</Text>
+          </Item>
         ))}
-      </ul>
+      </List>
 
       {error && (
         <p style={{ textAlign: 'center', margin: 'auto' }}>Sorry. {error} 😭</p>

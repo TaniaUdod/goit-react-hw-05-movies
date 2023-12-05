@@ -2,6 +2,14 @@ import { getMovieDetails } from 'api/TMDBApi';
 import Loader from 'components/Loader/Loader';
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import {
+  Button,
+  Container,
+  LinkInfo,
+  List,
+  Span,
+  TitleText,
+} from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -30,14 +38,14 @@ const MovieDetails = () => {
   return (
     <div>
       <Link to={location.state?.from ?? '/'}>
-        <button type="button">⬅ ⇚ Go back</button>
+        <Button type="button">Go back</Button>
       </Link>
 
       {isLoading && <Loader />}
 
       {movie && (
         <>
-          <div>
+          <Container>
             <img
               src={
                 movie.poster_path
@@ -52,27 +60,28 @@ const MovieDetails = () => {
                 {movie.title} ({movie.release_date.slice(0, 4)})
               </h1>
               <p>
-                <span>Rating: </span>
+                <Span>Rating: </Span>
                 {Math.round(movie.vote_average * 10) / 10}
               </p>
+              <TitleText>Overview: </TitleText>
               <p>{movie.overview}</p>
               <p>
-                <span>Genres: </span>
+                <Span>Genres: </Span>
                 {movie.genres.map(genre => genre.name).join(', ')}
               </p>
             </div>
-          </div>
+          </Container>
 
           <hr />
           <h2>Additional information</h2>
-          <ul>
+          <List>
             <li>
-              <Link to="cast">Cast</Link>
+              <LinkInfo to="cast">Cast</LinkInfo>
             </li>
             <li>
-              <Link to="reviews">Reviews</Link>
+              <LinkInfo to="reviews">Reviews</LinkInfo>
             </li>
-          </ul>
+          </List>
           <hr />
           <Outlet />
         </>

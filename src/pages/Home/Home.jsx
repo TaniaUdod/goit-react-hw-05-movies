@@ -25,7 +25,9 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Trending today</h1>
+      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
+        Trending today
+      </h1>
       {isLoading && <Loader />}
       <MoviesList movies={movies} />
       {error && (
