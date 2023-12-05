@@ -1,4 +1,5 @@
-import React from 'react';
+import Loader from 'components/Loader/Loader';
+import React, { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
 const Layout = () => {
@@ -10,7 +11,9 @@ const Layout = () => {
           <Link to="/movies">Movies</Link>
         </nav>
       </header>
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };

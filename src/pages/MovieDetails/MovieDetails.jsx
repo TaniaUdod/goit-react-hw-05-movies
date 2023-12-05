@@ -29,56 +29,58 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <Link to={location.state?.from || '/'}>
-        <button type="button">⬅ Go back</button>
+      <Link to={location.state?.from ?? '/'}>
+        <button type="button">⬅ ⇚ Go back</button>
       </Link>
 
       {isLoading && <Loader />}
 
       {movie && (
-        <div>
-          <img
-            src={
-              movie.poster_path
-                ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                : defaultImg
-            }
-            width={400}
-            alt={movie.original_title}
-          />
+        <>
           <div>
-            <h1>
-              {movie.title} ({movie.release_date.slice(0, 4)})
-            </h1>
-            <p>
-              <span>Rating: </span>
-              {Math.round(movie.vote_average * 10) / 10}
-            </p>
-            <p>{movie.overview}</p>
-            <p>
-              <span>Genres: </span>
-              {movie.genres.map(genre => genre.name).join(', ')}
-            </p>
+            <img
+              src={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                  : defaultImg
+              }
+              width={400}
+              alt={movie.original_title}
+            />
+            <div>
+              <h1>
+                {movie.title} ({movie.release_date.slice(0, 4)})
+              </h1>
+              <p>
+                <span>Rating: </span>
+                {Math.round(movie.vote_average * 10) / 10}
+              </p>
+              <p>{movie.overview}</p>
+              <p>
+                <span>Genres: </span>
+                {movie.genres.map(genre => genre.name).join(', ')}
+              </p>
+            </div>
           </div>
-        </div>
+
+          <hr />
+          <h2>Additional information</h2>
+          <ul>
+            <li>
+              <Link to="cast">Cast</Link>
+            </li>
+            <li>
+              <Link to="reviews">Reviews</Link>
+            </li>
+          </ul>
+          <hr />
+          <Outlet />
+        </>
       )}
 
       {error && (
         <p style={{ textAlign: 'center', margin: 'auto' }}>Sorry. {error} 😭</p>
       )}
-
-      <hr />
-      <h2>Additional information</h2>
-      <ul>
-        <li>
-          <Link to="cast">Cast</Link>
-        </li>
-        <li>
-          <Link to="reviews">Reviews</Link>
-        </li>
-      </ul>
-      <hr />
-      <Outlet />
     </div>
   );
 };
