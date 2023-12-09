@@ -1,6 +1,6 @@
 import { getMovieDetails } from 'api/TMDBApi';
 import Loader from 'components/Loader/Loader';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
@@ -17,6 +17,7 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState('');
   const location = useLocation();
+  const backLink = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,7 +38,7 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <Link to={location.state?.from ?? '/'}>
+      <Link to={backLink.current}>
         <Button type="button">Go back</Button>
       </Link>
 
